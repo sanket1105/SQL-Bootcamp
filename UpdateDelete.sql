@@ -41,4 +41,3 @@ DELETE from sql_bootcamp.student_03
 where name='Shankii' and major='Bio-Chemistry';
 
 SELECT * FROM sql_bootcamp.student_03
--- major from biology to bio
