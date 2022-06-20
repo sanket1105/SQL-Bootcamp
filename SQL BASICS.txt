@@ -1,0 +1,95 @@
+
+Databases: Collection of related information which can be stored in different ways which you liked.
+
+DBMS: helps in managing, storing, backing up the data.
+      Even helps in importing and exporting the data
+
+
+4 most basic operations that DBMS must perform for us: 
+C.R.U.D : Create Read Update Delete
+
+
+Two types of Databases: Relational (SQL) and Non-Relational(NoSQL)
+
+Relational Datasets are more like an Excel Spreadhseet
+
+SQL: Organizes data into one or more tables
+    Each table has rows and cols
+    A unique key identifies each row
+
+noSQL: Organize data in anything but a traditional table  
+        Like: key-value stores, JSON or XML type documents, Graphs, Flexible Tables etc
+
+
+
+#======================================================
+
+some relational Databases (SQL):
+mySQL,Oracle,postgreSQL,mariaDB
+
+SQL is used to interact with RDBMS
+
+-> SQL code on one RDBMS is not always portable on another RDBMS without modification
+
+#======================================================
+
+Some non-relational Databases (noSQL):
+mongoDB,dynamoDB, apache, firebase etc
+
+most of them will implement their own langauge for performing C.R.U.Databases
+
+#======================================================
+
+Database Queries:
+Queries are requests made to the database management system for the specific info.
+-> Google search is a query
+
+#======================================================
+
+Primary key: unique number or key used to define each row
+
+Surrogate key: a primary key that has no mapping to the real world
+                EX: employee number
+
+Natural Key: a primary key that has mapping to the real world
+                EX: social security number
+
+Foreign Key: an attribute that we can store on the database that will link us to another database table 
+              It basically stores the primary key of another database table 
+
+              Ex: employee and branch id are 2 different databases. So linking the brach databasee to employee database.
+              the brach column in the employee database will be the foreign key  
+
+Composite keys: A composite key in SQL can be defined as a combination of multiple columns, 
+                and these columns are used to identify all the rows that are involved uniquely
+                 
+
+#======================================================
+
+SQL is used to interact with the RDBMS.
+Certain SQL instructions might work on one RDBMs but not on another.
+#======================================================
+
+SQL a hybrid langauge:
+-> DQL : Data Query Language -> Get info that is already stored there
+-> DDL : Data Defination Language -> Used for defining database schemas -> What rows cols will be there in the database
+-> DCL : Data Control Language -> Used for controlling access to data
+-> DML : Data Manipulation Language -> Used for inserting, updating the data
+
+#======================================================
+
+Query: set of instructions gievn to the RDBMS so as to get what info you want to retrieve
+
+#======================================================
+
+Most common used datatypes in mysql:
+
+-> INT : Whole numbers
+-> DECIMAL(M,N) : Decimal number exact values
+                : M will be total number of digits in number,  
+                : N will be number of digits after decimal point   
+                 
+-> VARCHAR(l) : String of text of length l
+-> BLOB : binary large object : Stoes large data
+-> DATE : "yyyy-mm-dd"
+-> TIMESTAMP : "yyyy-mm-dd hh:mm:ss"  
