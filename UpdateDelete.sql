@@ -6,7 +6,7 @@ SELECT * FROM sql_bootcamp.student_03
 UPDATE sql_bootcamp.student_03 
 SET major = 'Bio'
 WHERE major='Biology';
--- if where not written, then all major will be set to bio
+-- if where not written, then all major will be set to bio 
 
 UPDATE sql_bootcamp.student_03 
 SET major = 'Comp Sci'
