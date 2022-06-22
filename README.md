@@ -14,3 +14,14 @@ These will help you for sure.
 You can refer to my sql GitHub repo for quick revision of the topics (will update the repo with more content).
 GitHub repo link:
 https://lnkd.in/dCNHsDVx
+
+
+## Oder Of repos:
+1. SQL Basics
+2. Tables 01
+3. Tables 02
+4. Tables 03
+5. Queries 
+6. UpdateDelete
+7. CreatingCompanyDatabase
+8. QueriesOnCompanyDatabaseCreated
