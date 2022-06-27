@@ -78,6 +78,7 @@ ORDER BY total_sales;
 -- total money spent by each client
 SELECT SUM(total_sales),client_id
 FROM sql_bootcamp.works_with
-GROUP BY client_id;
+GROUP BY client_id
+ORDER BY total_sales;
 
 
