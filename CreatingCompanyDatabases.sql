@@ -152,4 +152,4 @@ INSERT INTO sql_bootcamp.works_with VALUES(105, 406, 130000);
 
 
 
-SELECT * FROM sql_bootcamp.branch_supplier 
+SELECT * FROM sql_bootcamp.employee 
