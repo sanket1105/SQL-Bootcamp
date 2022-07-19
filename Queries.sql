@@ -72,4 +72,4 @@ WHERE name IN ('Shankii','Kate','Mike');
 
 
 SELECT * FROM sql_bootcamp.student
-WHERE name IN ('Shankii','Kate','Mike') AND major in ("Biology","Sociology");
+WHERE name IN ('Shankii','Kate','Mike') AND major in ("Biology","Sociology"); 
