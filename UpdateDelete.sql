@@ -4,7 +4,7 @@
 SELECT * FROM sql_bootcamp.student_03
 
 UPDATE sql_bootcamp.student_03 
-SET major = 'Bio'
+SET major = 'Biol'
 WHERE major='Biology';
 -- if where not written, then all major will be set to bio 
 
@@ -15,7 +15,7 @@ WHERE major='Computer Science';
 
 -- with respect to student id
 UPDATE sql_bootcamp.student_03 
-SET major = 'Comp Sci'
+SET major = 'Chem'
 WHERE student_id=2;
 
 
@@ -33,6 +33,9 @@ WHERE student_id=1;
 
 ----------------------------------------------------------------
 -- Delete in sql
+
+SELECT * FROM sql_bootcamp.student_03
+
 
 DELETE from sql_bootcamp.student_03
 where major='Undecided';

@@ -9,7 +9,7 @@ DBMS: helps in managing, storing, backing up the data.
 C.R.U.D : Create Read Update Delete
 
 
-Two types of Databases: Relational (SQL) and Non-Relational(NoSQL)
+Two types of Databases: Relational (SQL) and Non-Relational (NoSQL)
 
 Relational Datasets are more like an Excel Spreadhseet
 
@@ -36,7 +36,8 @@ SQL is used to interact with RDBMS
 Some non-relational Databases (noSQL):
 mongoDB,dynamoDB, apache, firebase etc
 
-most of them will implement their own langauge for performing C.R.U.Databases
+most of them will implement their own langauge for performing C.R.U.D d
+atabases
 
 #======================================================
 
@@ -82,6 +83,27 @@ Query: set of instructions gievn to the RDBMS so as to get what info you want to
 
 #======================================================
 
+
+Primary key index number cant be repeated 
+as in 2 entries cant have same index if the index is specified as the primary key
+
+also primary key cant be null
+
+---------------------------------------------------------
+
+Composite Key:
+
+A composite key is made by the combination of two or more columns in a table that
+ can be used to uniquely identify each row in the table when the columns 
+ are combined uniqueness of a row is guaranteed, but when it is taken
+individually it does not guarantee uniqueness, or it can also be 
+understood as a primary key made by the combination of two or 
+more attributes to uniquely identify every row in a table. 
+
+=============================================================================  
+
+
+
 Most common used datatypes in mysql:
 
 -> INT : Whole numbers
@@ -90,7 +112,7 @@ Most common used datatypes in mysql:
                 : N will be number of digits after decimal point   
                  
 -> VARCHAR(l) : String of text of length l
--> BLOB : binary large object : Stoes large data
+-> BLOB : binary large object : Stores large data
 -> DATE : "yyyy-mm-dd"
 -> TIMESTAMP : "yyyy-mm-dd hh:mm:ss"  
 
@@ -99,19 +121,23 @@ Most common used datatypes in mysql:
 ###############################################
 
 Insert into and VALUES pair
-Update and set and WHERE pair
+Update and SET and WHERE pair
 DELETE FROM and WHERE
-To delete all databse: DELETE FROM database_name
+To delete all database: DELETE FROM database_name
 
 
-SELECT TOP 3 * FROM database
+SELECT TOP 3 FROM database
 
 SELECT * FROM database
 LIMIT 3
 
-COUNT, AVG, SUM,MIN,MAX
+----------------------------------------------------------
+
+COUNT, AVG, SUM,MIN,MAX, DISTINCT
 
 Sum ignores the null values
+
+<> also ignores the NULL value
 
 a%o : Starts with a and ends with o
 

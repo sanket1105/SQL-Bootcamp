@@ -1,8 +1,14 @@
 
 -- sql_bootcamp.EMPLOYEE TABLE
+SELECT @@VERSION
+ 
+-- DROP TABLE sql_bootcamp.works_with;
+
+DROP TABLE sql_bootcamp.client;
+DROP TABLE sql_bootcamp.branch_supplier;
 
 
-CREATE TABLE sql_bootcamp.sql_bootcamp.employee (
+CREATE TABLE sql_bootcamp.employee (
   emp_id INT PRIMARY KEY,
   first_name VARCHAR(40),
   last_name VARCHAR(40),
@@ -15,11 +21,12 @@ CREATE TABLE sql_bootcamp.sql_bootcamp.employee (
   -- so can't write foreign key as such
 );
 
+DESCRIBE sql_bootcamp.employee
 
 -- BRANCH TABLE
 -- here, mgr_id is foreign key to emp_id
 
-CREATE TABLE sql_bootcamp.sql_bootcamp.branch(
+CREATE TABLE sql_bootcamp.branch(
     branch_id INT PRIMARY KEY,
     branch_name VARCHAR(40),
     mgr_id INT,
@@ -30,37 +37,41 @@ CREATE TABLE sql_bootcamp.sql_bootcamp.branch(
 
 -- now super_id and branch_id in sql_bootcamp.employee table as foreign keys
 
-ALTER TABLE sql_bootcamp.sql_bootcamp.employee
+ALTER TABLE sql_bootcamp.employee
 ADD FOREIGN KEY(branch_id)
 REFERENCES sql_bootcamp.branch(branch_id)
 ON DELETE SET NULL;
 
-
-ALTER TABLE sql_bootcamp.sql_bootcamp.employee
+ALTER TABLE sql_bootcamp.employee
 ADD FOREIGN KEY(super_id)
 REFERENCES sql_bootcamp.employee(emp_id)
 ON DELETE SET NULL;
 
 
 -- sql_bootcamp.Client Table
-CREATE TABLE sql_bootcamp.sql_bootcamp.client(
-    sql_bootcamp.client_id INT PRIMARY KEY,
-    sql_bootcamp.client_name VARCHAR(40),
+
+CREATE TABLE sql_bootcamp.Client(
+    client_id INT PRIMARY KEY,
+    client_name VARCHAR(40),
     branch_id INT,
-    FOREIGN KEY(branch_id) REFERENCES sql_bootcamp.branch(branch_id) ON DELETE SET NULL
+    FOREIGN KEY(branch_id) REFERENCES sql_bootcamp.employee(branch_id) ON DELETE SET NULL
 );
+
+
 
 -- Works with table
 
-CREATE TABLE sql_bootcamp.sql_bootcamp.works_with(
+
+CREATE TABLE sql_bootcamp.works_with(
     emp_id INT,
-    sql_bootcamp.client_id INT,
+    client_id INT,
     total_sales INT,
-    PRIMARY KEY(emp_id, sql_bootcamp.client_id),
+    PRIMARY KEY(emp_id, client_id),
     -- emp_id and sql_bootcamp.client_id are composite primary keys here
-    -- so kinda declare foreign keys here
+    -- also they are primary keys in the other Tables
+    -- so declare them as the foreign keys also
     FOREIGN KEY(emp_id) REFERENCES sql_bootcamp.employee(emp_id) ON DELETE CASCADE,
-    FOREIGN KEY(sql_bootcamp.client_id) REFERENCES sql_bootcamp.client(sql_bootcamp.client_id) ON DELETE CASCADE
+    FOREIGN KEY(client_id) REFERENCES sql_bootcamp.client(client_id) ON DELETE CASCADE
 );
 
 -- sql_bootcamp.Branch_supplier table
@@ -70,6 +81,7 @@ CREATE TABLE sql_bootcamp.branch_supplier(
     supplier_name VARCHAR(40),
     supply_type VARCHAR(40),
     PRIMARY KEY(branch_id,supplier_name), 
+    -- branch id is the foeign key in the other tables created
     FOREIGN KEY(branch_id) REFERENCES sql_bootcamp.branch(branch_id) ON DELETE CASCADE
 );
 
@@ -79,8 +91,10 @@ CREATE TABLE sql_bootcamp.branch_supplier(
 
 -- Corporate
 
-INSERT INTO sql_bootcamp.employee VALUES(100, 'David', 'Wallace', '1967-11-17', 'M', 250000, NULL, NULL);
--- putting branch_id as NULL : since its a foreign key and sql_bootcamp.branch hasn't been created yet
+INSERT INTO sql_bootcamp.employee VALUES(100, 'David', 'Wallace', '1967-11-17', 'M', 250000,NULL, 1);
+-- putting branch_id as NULL : since the branch table is not created yet, so confusion will be there, where it is pointing
+
+SELECT * FROM sql_bootcamp.employee;
 
 INSERT INTO sql_bootcamp.branch VALUES(1, 'Corporate', 100, '2006-02-09');
 -- Since mgr_id is a foreign key to emp_id but we allready defined emp_id 100,  
@@ -93,17 +107,20 @@ WHERE emp_id = 100;
 INSERT INTO sql_bootcamp.employee VALUES(101, 'Jan', 'Levinson', '1961-05-11', 'F', 110000, 100, 1);
 
 
+
 -- Scranton
 
+
 INSERT INTO sql_bootcamp.employee VALUES(102, 'Michael', 'Scott', '1964-03-15', 'M', 75000, 100, NULL);
+
+INSERT INTO sql_bootcamp.employee VALUES(103, 'Angela', 'Martin', "2000/05/11", 'F', 63000, 102, NULL);
 
 INSERT INTO sql_bootcamp.branch VALUES(2, 'Scranton', 102, '1992-04-06');
 
 UPDATE sql_bootcamp.employee
 SET branch_id = 2
-WHERE emp_id = 102;
+WHERE emp_id = 102 OR emp_id=103;
 
-INSERT INTO sql_bootcamp.employee VALUES(103, 'Angela', 'Martin', '1971-06-25', 'F', 63000, 102, 2);
 INSERT INTO sql_bootcamp.employee VALUES(104, 'Kelly', 'Kapoor', '1980-02-05', 'F', 55000, 102, 2);
 INSERT INTO sql_bootcamp.employee VALUES(105, 'Stanley', 'Hudson', '1958-02-19', 'M', 69000, 102, 2);
 
@@ -153,3 +170,6 @@ INSERT INTO sql_bootcamp.works_with VALUES(105, 406, 130000);
 
 
 SELECT * FROM sql_bootcamp.employee 
+
+SELECT * FROM sql_bootcamp.employee
+LIMIT 3;
