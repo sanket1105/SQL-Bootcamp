@@ -10,9 +10,9 @@ INSERT INTO sql_bootcamp.branch VALUES (4,'Buffalo',NULL,NULL);
 
 Four types of joins:
 
-1. Inner join: Combines rows of 2 tables when they have shared columns in common
+1. Normal or Inner join: Combines rows of 2 tables when they have columns in common though name of the shared cols may be different
 
-2. Left Join: includes all the ros from the left table
+2. Left Join: includes all the rows from the left table though they dont have matching in the right side
             -> Left table is the one that is included in the from statement
 
 3. Right join -> all the rows that are in the right table
@@ -49,35 +49,67 @@ ON sql_bootcamp.employee.emp_id = sql_bootcamp.branch.mgr_id;
 -- Nested Queries : Multiple select statements to get the info
 
 -- find names of all employees who have sold over 30000 to a single client
+ 
 
 SELECT employee.emp_id, employee.first_name
-from sql_bootcamp.employee
+FROM sql_bootcamp.employee
 WHERE employee.emp_id IN(
-    SELECT works_with.emp_id
+    SELECT emp_id
     FROM sql_bootcamp.works_with
-    WHERE works_with.total_sales > 30000
-    );
+    WHERE total_sales > 30000
+);
+
 
 
 -- find all clients who are handled by the branch that Scott manages
--- assume you know micheals ID
-
-SELECT client.client_name
+-- assume you know micheals mgr_ID and not the branch id
+SELECT client_name 
 FROM sql_bootcamp.client
-WHERE client.branch_id IN (
-    SELECT branch.branch_id
-    FROM sql_bootcamp.branch
-    WHERE branch.mgr_id = 102
+WHERE branch_id IN
+(SELECT branch_id
+FROM sql_bootcamp.branch
+WHERE mgr_id = 102
 );
+
+
+
+-- find all clients who are handled by the branch that Scott manages
+-- assume you know micheals operated  branch id
+
+SELECT client_name 
+FROM sql_bootcamp.client
+WHERE client_id IN (
+    SELECT client_id
+    FROM sql_bootcamp.client
+    WHERE branch_id = 2
+);
+
 
 -- now scott may be manager at many firms
 -- as soon as you see scoot as the manager of 1st firm, return its client
-SELECT client.client_name
+-- basically it means just return the first client name thats it
+
+-- used inner SELECT * from (..) as t : since subquerry doesnt support the limit, in, all subfunctions in it
+SELECT client_name 
 FROM sql_bootcamp.client
-WHERE client.branch_id IN (
-    SELECT branch.branch_id
-    FROM sql_bootcamp.branch
-    WHERE branch.mgr_id = 102
-    LIMIT 1
+WHERE client_id IN (
+    SELECT * FROM
+    (SELECT client_id
+    FROM sql_bootcamp.client
+    WHERE branch_id = 2
+    LIMIT 1 ) as t
+);
+
+
+----------------------------------------------------------------SELECT client_name 
+-- HERE ERROR WILL COME, Since
+-- it has limit function in its subquerry 
+SELECT client_name 
+FROM sql_bootcamp.client
+WHERE client_id IN(
+    SELECT client_id
+    FROM sql_bootcamp.client
+    WHERE branch_id = 2
+    LIMIT 1 
 );
 -- not supported yet by the sql version

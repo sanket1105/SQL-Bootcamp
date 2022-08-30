@@ -230,3 +230,16 @@ FROM OrderDetails;
 
  SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0))
 FROM Products;
+
+
+MOD(X,Y) = 0 IS X%Y=0 ANDZZ
+
+-- SUbstraction in sql : SELECT COUNT(CITY) - COUNT(DISTINCT(CITY)) FROM STATION;
+
+-- LENGTH(CITY) WILL GIVE THE LEN OF THE NAME OF THE STRING
+
+https://www.w3schools.com/sql/func_mysql_substr.asp
+
+LOWER() turns the entry in lower case
+
+leFT AND RIGHT 

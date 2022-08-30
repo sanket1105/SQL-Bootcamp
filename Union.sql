@@ -1,6 +1,6 @@
 
 -- union: used to combine results of multiple select statements into one
--- there must be same number of cols in each select statemet for the union to take place
+-- there must be same number of cols selected in each select statemet for the union to take place
 -- both should have similar data type
 
 
@@ -26,7 +26,7 @@ UNION
 SELECT last_name
 FROM sql_bootcamp.employee;
 
--- list of all clients and braanch supplier names
+-- list of all clients and branch supplier names
 SELECT client_name
 FROM sql_bootcamp.client
 UNION
@@ -43,6 +43,7 @@ FROM sql_bootcamp.branch_supplier
 
 
 -- find all money spent or earned by the company
+
 
 -- spent on salary, earned on sales
 SELECT SUM(total_sales)
