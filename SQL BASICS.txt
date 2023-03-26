@@ -48,7 +48,7 @@ Queries are requests made to the database management system for the specific inf
 #======================================================
 
 Primary key: unique number or key used to define each row
-
+  
 Surrogate key: a primary key that has no mapping to the real world
                 EX: employee number
 
@@ -79,7 +79,7 @@ SQL a hybrid langauge:
 
 #======================================================
 
-Query: set of instructions gievn to the RDBMS so as to get what info you want to retrieve
+Query: set of instructions given to the RDBMS so as to get what info you want to retrieve
 
 #======================================================
 
@@ -133,7 +133,7 @@ LIMIT 3
 
 ----------------------------------------------------------
 
-COUNT, AVG, SUM,MIN,MAX, DISTINCT
+COUNT,AVG,SUM,MIN,MAX,DISTINCT
 
 Sum ignores the null values
 
@@ -215,7 +215,7 @@ INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Cou
 SELECT SupplierName, ContactName, Address, City, PostalCode, Country FROM Suppliers;
 --------------------------------------------------------------------------------
 
-CASE WHEN THEN END
+CASE WHEN THEN Else END
 
 SELECT OrderID, Quantity,
 CASE
@@ -243,3 +243,360 @@ https://www.w3schools.com/sql/func_mysql_substr.asp
 LOWER() turns the entry in lower case
 
 leFT AND RIGHT 
+
+
+order by RIGHT
+substring()
+
+
+Datediff()
+
+## types of triangle problem
+Case 
+    when  THEN
+
+    else
+end    
+
+## PADS problem
+CONCAT
+
+Row_Number
+
+CAST ___ AS NUMERIC(36,4) : WILL GIVE THE ___ JUST TO GET 4 PLACES AFTER DECIMAL too
+
+ROUND(X,4) WILL NOT GUARATEE YOU WILL ONLY GET 4 PLACES AFTER DECIMAL, BUT WILL ROUND THE 4 DECIMAL DIGITS
+
+SQRT
+POWER(X,2)
+
+
+WIth data AS
+
+Having
+
+
+Identity column
+
+row_number() : use to create a unique number for the column
+row_number over (order by column_name) as XXX -> XXX is the new column name
+
+row_number over (partition by column_name order by column_name) as XXX 
+
+rank() over (order by XX) as yy
+dense_rank() over (order by XX) as yy
+
+
+SELECT round(AVG(POPULATION),0) FROM CITY
+OR 
+SELECT round(AVG(POPULATION),-1) FROM CITY
+
+## -1 is the first digit left to the decimal, -2 second digit left to sql and so on
+## 1 is the first digit right to decimal
+## so will round according to the digit placement
+
+
+->BOTH WORKS
+-> ROUNF TO NEAREST INTEGER
+
+SELECT CEILING(AVG(SALARY)) - CEILING(AVG(CAST(REPLACE(CAST(Salary AS VARCHAR(10)),"0","") AS INT))) + 1 FROM EMPLOYEES
+
+## mysql : select ceil(avg(salary) - avg(replace(salary,'0',''))) from employees
+
+
+## Left right functions
+left(city,1)
+
+substr(name, start,end) ## for characters from start
+substr(name,-1) ## last character in the name
+
+
+select distinct city from station
+where city REGEXP "^[aeiou].*[aeiou]$"
+
+select distinct city from station
+where city REGEXP "^[^aeiou]"
+
+select distinct city from station
+where city REGEXP "[^aeiou]$"
+
+
+## | is for either or
+select distinct city from station
+where city REGEXP "^[^aeiou]|[^aeiou]$"
+
+
+## types of traingles
+
+/*
+Enter your query here.
+*/
+
+select case
+    when a+b>c and b+c>a and a+c>b then
+        case
+            when a=b and b=c then "Equilateral"
+            when a=b or b=c or a=c then "Isosceles"
+            else "Scalene"
+        end
+    else "Not A Triangle"
+    end
+from triangles
+
+
+## sqrt() , power(x,n)
+
+## median of the database
+
+## instead of using case when then end in sql, use if case : if(g.grade<8, NULL, s.name)
+## if grade < 8, then null else name
+
+## https://www.hackerrank.com/challenges/full-score/problem?isFullScreen=false
+## personal best queston
+
+
+## https://medium.com/jen-li-chen-in-data-science/hackerrank-3b61f00439b4
+## https://www.hackerrank.com/challenges/harry-potter-and-wands/problem?isFullScreen=true
+
+
+## hard question
+https://www.hackerrank.com/challenges/challenges/problem?isFullScreen=true
+https://www.hackerrank.com/challenges/challenges/problem
+
+
+
+## to get the month from the date
+extract(month from submit_date)
+
+date_part('days',max(post_date) - min(post_date))
+date_part('month',sent_date)
+
+count(*) will count the number of rows in the table
+
+sum(case 
+when lower(payment_method) = 'apple pay' then transaction_amount else 0
+end)
+
+
+SELECT app_id , 
+round(
+100.0 * sum(case when event_type='click' then 1 else 0 end) /
+sum(case when event_type='impression' then 1 else 0 end),2) from events
+where date_part('year',timestamp)=2022
+group by app_id
+
+
+## second day confirmation question: @datalemur
+## https://datalemur.com/questions/second-day-confirmation
+WITH cte AS (
+SELECT 
+  *,
+  RANK() OVER(PARTITION BY user_id ORDER BY action_date ASC) AS rn
+FROM 
+  emails e JOIN texts t
+  ON e.email_id = t.email_id
+ORDER BY
+  action_date
+)
+SELECT
+  user_id
+FROM
+  cte
+WHERE
+  rn = 2 AND signup_action = 'Confirmed
+
+
+## https://datalemur.com/questions/compensation-outliers
+with data as (
+SELECT employee_id, salary, title,
+(avg(salary) over(partition by title))*2 as overpaid,
+(avg(salary) over(partition by title))/2 as underpaid
+FROM employee_pay)
+
+select employee_id,salary,
+case when salary > overpaid then 'Overpaid'
+      when salary < underpaid then 'Underpaid'
+      end as status
+from data
+where salary>overpaid or salary < underpaid
+
+## in this if you write "Overpaid" or anything in double quotation marks ""
+## it will be think that text inside the "" is the column name
+
+
+
+ 
+## 3 day moving average
+## https://datalemur.com/questions/rolling-average-tweets
+select user_id, tweet_date, ROUND(avg(number) over(partition by user_id order by tweet_date
+rows BETWEEN 2 preceding and current row),2) as rolling_avg_3days
+
+
+## when you just want the date : cast(measurement_time as date)
+## remiander : i%2
+
+
+## for getting the combinations which dont repeat like a,b same as b,a:
+SELECT a.country as country1, b.country as country2
+FROM country a
+JOIN country b
+ON a.country>b.country
+
+
+## for getting the combinations even if they repeat, no issues in thats
+-> use cross join
+FROM country a
+cross JOIN country b
+
+
+## https://datalemur.com/questions/frequently-purchased-pairs
+
+## row_number that we get from rank() and some condition on the same row_number 
+cannnot exist in a single Query
+## so for that write a subquery assigning the row number to it
+and use that subquery to write some condition on the row_number
+
+
+
+## if multilple joins in single query : then use group by at the last
+## and some condition you need to apply, then use group by and then only condition
+
+
+
+## first_value() function: https://datalemur.com/questions/fill-missing-product
+## this is used to fill the null values
+
+
+## to add days in the date
+dateadd() method
+
+
+## ce.end_date - ce.start_date
+## will give the number of days between the dates 
+
+
+####################################################
+SELECT 
+Round((100.0 * sum(case when lower(event_type) like 'webinar' then 1 else 0 end) / 
+count(*)))
+FROM marketing_touches
+where date_part('month',event_date) = 04
+
+
+#####################################
+https://datalemur.com/questions/uniquely-staffed-consultants
+
+
+## https://datalemur.com/questions/sql-repeat-purchases
+
+
+## Cummulative Sum`
+SELECT order_date, product_type, 
+SUM(quantity) OVER (PARTITION BY product_type ORDER BY order_date
+rows between unbounded preceding and current row) AS cum_purchased
+FROM total_trans
+ORDER BY order_date;
+
+
+########################################################
+SELECT u.city, count(t.order_id) FROM trades t
+join users u
+on u.user_id = t.user_id and status = 'Completed'
+
+## so when you wanna join and with some condition using and clause in the join statement
+rather than using join and then having clause
+
+###############################################################
+## https://datalemur.com/questions/money-transfer-relationships
+
+
+# Round((sum(revenue)/sum(spend))::decimal ,2)
+or 
+## cast(sum(revenue)/sum(spend) as decimal(16,2))
+
+
+
+##############################################
+https://datalemur.com/questions/rolling-average-tweets
+
+
+## if you have tabel with entries a and b
+## you wanna also see if b,a is also there in the same table
+## so just use the intersect option from the table to see whether b,a is also there or not
+-> with data1 as 
+(select payer_id, recipient_id from payments p
+intersect
+select recipient_id, payer_id from payments )
+
+select count(*)/2 from data1
+
+#################################################################################
+first_value(): to get the first value in each category
+
+################################################
+left(string,6)
+right(string,6)
+
+#################################################
+lag() in sql
+
+
+############################################################################
+
+# for mean, median and mode
+
+round(avg(email_count),0) as mean,
+PERCENTILE_CONT(0.5) within group (order by email_count) as median,
+mode() within group (order by email_count) as mode
+
+#############################################################################
+https://datalemur.com/questions/frequently-purchased-pairs
+
+
+# starting with vowel:
+select distinct city from station
+where lower(city) regexp '^[aeiou]'
+############################################################################################################
+
+## ending with vowel
+select distinct city from station
+where lower(city) regexp '[aeiou]$'
+
+OR
+
+SELECT DISTINCT CITY
+FROM STATION
+WHERE CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u';
+
+###############################################################
+## start and edn as vowel
+select distinct city from station
+where lower(city) regexp '^[aeiou].*[aeiou]$'
+
+SELECT DISTINCT CITY
+FROM STATION
+WHERE LOWER(LEFT(CITY, 1)) IN ('a', 'e', 'i', 'o', 'u')
+      AND LOWER(RIGHT(CITY, 1)) IN ('a', 'e', 'i', 'o', 'u');
+
+
+###############################################################
+no start and end with vowel
+SELECT DISTINCT CITY
+FROM STATION
+WHERE lower(CITY)  REGEXP '^[^aeiou].*[^aeiou]$';
+
+
+
+
+######################################################################
+my sql
+select case 
+        when a+b>c and a+c>b and b+c>a then
+            case 
+                when a=b and b=c then 'Equilateral'
+                when a=b or b=c or a=c then 'Isosceles'
+                else 'Scalene'
+            end
+        else 'Not A Triangle'
+    end as one
+from Triangles;
